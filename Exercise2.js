@@ -1,49 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-import {StyleSheet, Text, View, SectionList, TouchableOpacity} from 'react-native';
+import {StatusBar, StyleSheet, Text, View, SectionList, TouchableOpacity, Button} from 'react-native';
 import React from "react";
+import {datasource} from "./Ex2_Data.js";
 
-const datasource = [
-    {data:[
-            {key: 'a'}, {key: 'e'}, {key: 'i'}, {key: 'o'}
-        ],
-        title:"Vowels",
-        bgcolor:"skyblue"
-    },
-    {data:[
-            {key: 'b'}, {key: 'c'}, {key: 'd'}, {key: 'f'}, {key: 'g'},
-            {key: 'h'}, {key: 'j'}, {key: 'k'}, {key: 'l'}, {key: 'm'},
-            {key: 'n'}, {key: 'p'}, {key: 'q'}, {key: 'r'}, {key: 's'}
-        ],
-        title:"Consonants",
-        bgcolor:"khaki"}
-];
+const Ex2 = ({navigation}) => {
 
 const renderItem = ({item, index, section}) => {
     return (
-        <TouchableOpacity style={styles.opacityStyle}>
+        <TouchableOpacity style={styles.opacityStyle}
+                          onPress={() => {navigation.navigate("Edit", {index:index, type:section.title, key:item.key});
+                          }}>
             <Text style={styles.textStyle}>{item.key}</Text>
         </TouchableOpacity>
     );
 };
 
-const renderSection = ({section}) => {
-    return (
-        <Text style={[styles.headerText, {backgroundColor:section.bgcolor} ]}>
-            {section.title}
-        </Text>
-    );
-};
-
-export default function App() {
     return (
         <View>
-            <StatusBar hidden={true}/>
-            <SectionList sections={datasource}
-                         renderItem={renderItem}
-                         renderSectionHeader={renderSection}/>
+            <StatusBar/>
+            <Button title='Add Letter' onPress={() => {navigation.navigate("Add")}}/>
+            <SectionList sections={datasource} renderItem={renderItem}
+                         renderSectionHeader={({section:{title,bgcolor}})=>(
+                             <Text style={[styles.headerText,{backgroundColor:bgcolor}]}>
+                                 {title}
+                             </Text>
+                         )}/>
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     headerText: {
@@ -61,3 +44,5 @@ const styles = StyleSheet.create({
         textAlign: 'left'
     }
 });
+
+export default Ex2;

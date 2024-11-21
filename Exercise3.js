@@ -1,25 +1,26 @@
 import { StatusBar } from 'expo-status-bar';
 import {Image, StyleSheet, Text, TouchableOpacity, View, Button, SectionList} from 'react-native';
 import React from "react";
+import Icon from 'react-native-vector-icons/FontAwesome6';
 
 const datasource = [
     {data:[
             {name: 'Pikachu', cardnumber: '25'},
             {name: 'Voltorb', cardnumber: '100'},
         ],
-        title:"Electric", icon:"bolt", txtcolor:"goldenrod", bgcolour:"yellow"
+        title:"Electric", icon:"bolt", txtcolor:"goldenrod", bgcolor:"yellow"
     },
     {data:[
             {name: 'Squirtle', cardnumber: '7'},
             {name: 'Psyduck', cardnumber: '54'},
         ],
-        title:"Water", icon:"droplet", txtcolor:"slateblue", bgcolour:"skyblue"
+        title:"Water", icon:"droplet", txtcolor:"slateblue", bgcolor:"skyblue"
     },
     {data:[
             {name: 'Charizard', cardnumber: '6'},
             {name: 'Ninetales', cardnumber: '38'},
         ],
-        title:"Fire", icon:"fire", txtcolor:"orangered", bgcolour:"lightsalmon"
+        title:"Fire", icon:"fire", txtcolor:"orangered", bgcolor:"lightsalmon"
     },
 ];
 
@@ -30,7 +31,7 @@ const renderItem = ({item}) => {
             <View style={styles.listItemStyle}>
                 <Text style={styles.textStyle}>{item.name}</Text>
                 <View style={{alignItems:"flex-end"}}>
-                <Image source={{uri:cardimg}} style={styles.imageStyle}/>
+                    <Image source={{uri:cardimg}} style={styles.imageStyle}/>
                 </View>
             </View>
         </TouchableOpacity>
@@ -47,11 +48,13 @@ export default function App() {
                 </View>
             </View>
             <SectionList contentContainerStyle={{padding: 20}}
-                sections={datasource}
-                renderItem={renderItem}
-                renderSectionHeader={({section:{icon,bgcolor,txtcolor}})=>(
-            <Icon style={[styles.iconTxtStyle, {backgroundColor: bgcolor}]} name={icon} size={20} color={txtcolor}/>
-                )}/>
+                         sections={datasource}
+                         renderItem={renderItem}
+                         renderSectionHeader={({section:{icon,title,bgcolor,txtcolor}})=>(
+                             <Icon style={[styles.iconTxtStyle, {backgroundColor: bgcolor}]} name={icon} size={20} color={txtcolor}>
+                                 <Text>{title}</Text>
+                             </Icon>
+                         )}/>
         </View>
     );
 }
